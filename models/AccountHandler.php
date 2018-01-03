@@ -87,7 +87,14 @@ class AccountHandler{
 			}
 			else 
 			{
-				$resultData=array("status"=>true,"guProfileId"=>$rawData[0]["guProfileId"],"error"=>"00000","message"=>"Authentication has been successful.");
+				if (isset ( $rawData )) {
+				
+					$query = "select * from profile where guProfileId ='" . $rawData[0]["guProfileId"] . "'";
+					$DetailData = $this->db->query ( $query );
+				
+					$rawData [0] ["ProfileDetails"] = $DetailData;
+				}
+				$resultData=array("status"=>true,"profile"=>$rawData[0]["ProfileDetails"],"error"=>"00000","message"=>"Authentication has been successful.");
 			}
 			return $resultData;
 	
